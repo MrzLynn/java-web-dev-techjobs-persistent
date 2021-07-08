@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by LaunchCode
@@ -38,21 +39,30 @@ public class HomeController {
     public String processAddJobForm(@ModelAttribute @Valid Job newJob,
                                        Errors errors, EmployerRepository employerRepository, Model model, @RequestParam int employerId, @RequestParam List<Integer> skills) {
 
+        Optional optEmployerRepository = employerRepository.findById(employerId);
         if (errors.hasErrors()) {
             model.addAttribute("title", "Add Job");
-            model.addAttribute(new Employer());
-            model.addAttribute("employers", employerRepository.findAll());
+            model.addAttribute(new Job());
+            model.addAttribute("employer", employerRepository.findAll());
+            employerRepository.findById(employerId);
             return "add";
+        } else {
+            if (optEmployerRepository.isPresent()) {
+                Employer employer = (Employer) optEmployerRepository.get();
+                model.addAttribute("employer", employer);
+                return "add/view";
+            } else {
+                return "redirect:../";
+            }
         }
-        model.addAttribute(employerRepository.findById(employerId));
-        return "redirect:";
-    }
 
+    }
     @GetMapping("view/{jobId}")
-    public String displayViewJob(Model model, @PathVariable int jobId) {
+    public String displayViewJob (Model model,@PathVariable int jobId){
 
         return "view";
     }
 
-
 }
+
+
