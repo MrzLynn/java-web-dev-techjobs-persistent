@@ -58,7 +58,8 @@ public class HomeController {
             newJob.setSkills(skillObjs);
             return "add";
         } else {
-
+            System.out.println(newJob);
+            System.out.println(employerId);
             model.addAttribute(jobRepository.save(newJob));
             return "redirect:/";
         }

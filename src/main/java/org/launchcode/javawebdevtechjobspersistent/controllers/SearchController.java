@@ -51,7 +51,7 @@ public class SearchController {
         model.addAttribute("columns", columnChoices);
         model.addAttribute("title", "Jobs with " + columnChoices.get(searchType) + ": " + searchTerm);
         model.addAttribute("jobs", jobs);
-        model.addAttribute("job.employer.id", employerRepository.findAll());
+        model.addAttribute("jobs", employerRepository.findAll());
         List<Skill> skillObjs = (List<Skill>) skillRepository.findAllById(skills);
 
         return "search";
