@@ -1,5 +1,6 @@
 package org.launchcode.javawebdevtechjobspersistent.controllers;
 
+import org.launchcode.javawebdevtechjobspersistent.models.Employer;
 import org.launchcode.javawebdevtechjobspersistent.models.Job;
 import org.launchcode.javawebdevtechjobspersistent.models.Skill;
 import org.launchcode.javawebdevtechjobspersistent.models.data.EmployerRepository;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -53,13 +55,14 @@ public class HomeController {
             model.addAttribute("title", "Add Job");
             model.addAttribute(new Job());
             model.addAttribute("employers", employerRepository.findAll());
-            employerRepository.findById(employerId);
             List<Skill> skillObjs = (List<Skill>) skillRepository.findAllById(skills);
-            newJob.setSkills(skillObjs);
+
             return "add";
         } else {
-            System.out.println(newJob);
-            System.out.println(employerId);
+
+            Employer employer = employerRepository.findById(employerId).orElse(new Employer());
+            newJob.setEmployer(employer);
+
             model.addAttribute(jobRepository.save(newJob));
             return "redirect:/";
         }

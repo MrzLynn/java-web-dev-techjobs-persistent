@@ -23,10 +23,9 @@ public class EmployerController {
     private static List<String> employers = new ArrayList<>();
 
     @RequestMapping
-    public String displayAllJobs(Model model) {
+    public String displayAllEmployers(Model model) {
         model.addAttribute("title", "All Employers");
-        model.addAttribute("employers", employers);
-        model.addAttribute("events",employerRepository.findAll());
+        model.addAttribute("employers",employerRepository.findAll());
         return "employers/index";
     }
 

@@ -27,7 +27,7 @@ public class SkillController {
     @RequestMapping
     public String displayAllSkills(Model model) {
         model.addAttribute("title", "All Employers");
-        model.addAttribute("skills", skills);
+
         model.addAttribute("skills",skillRepository.findAll());
         return "skills/index";
     }
@@ -45,6 +45,7 @@ public class SkillController {
         if (errors.hasErrors()) {
             return "skills/add";
         }
+        newSkill.getDescription();
         model.addAttribute(skillRepository.save(newSkill));
         return "redirect:";
     }

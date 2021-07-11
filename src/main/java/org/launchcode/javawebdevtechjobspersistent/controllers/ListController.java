@@ -60,7 +60,7 @@ public class ListController {
             model.addAttribute("title", "Jobs with " + columnChoices.get(column) + ": " + value);
         }
         model.addAttribute("jobs", jobs);
-//        List<Skill> skillObjs = (List<Skill>) skillRepository.findAllById();
+
 
         return "list-jobs";
     }
